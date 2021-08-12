@@ -13,7 +13,6 @@ export interface ProductState {
   totalCarts: number;
   totalPrice: number;
 }
-let carts = Storage.getCart();
 const initialState: ProductState = {
   data: [],
   total: 0,
@@ -23,9 +22,9 @@ const initialState: ProductState = {
     _page: 1,
     _limit: 8,
   },
-  carts: carts,
-  totalCarts: setCartValues(carts).totalCarts,
-  totalPrice: setCartValues(carts).totalPrice,
+  carts: Storage.getCart(),
+  totalCarts: setCartValues(Storage.getCart()).totalCarts,
+  totalPrice: setCartValues(Storage.getCart()).totalPrice,
 };
 
 const productReducer = createSlice({
@@ -48,22 +47,36 @@ const productReducer = createSlice({
       state.filter = action.payload;
     },
     addToCart(state, action: PayloadAction<any>) {
-      let carts = Storage.getCart();
-      const cartItem = { ...action.payload.product, amount: 1 };
-      const foundIndex = carts.findIndex((item: ICartItem) => item.id === cartItem.id);
+      const cartItem = {
+        ...action.payload.product,
+        amount: 1,
+        total: parseInt(action.payload.product.price) * 100,
+      };
+      const foundIndex = state.carts.findIndex(
+        (item: ICartItem) => item.id === cartItem.id
+      );
 
       if (foundIndex === -1) {
-        carts = [...carts, cartItem];
+        state.carts.push(cartItem);
       } else {
-        carts[foundIndex].amount = carts[foundIndex].amount + action.payload.quality;
-        carts[foundIndex].total =
-          carts[foundIndex].price * carts[foundIndex].amount * 1000;
+        state.carts[foundIndex].amount =
+          action.payload.type === 'UPDATE_CART'
+            ? action.payload.amount
+            : state.carts[foundIndex].amount + action.payload.amount;
+        state.carts[foundIndex].total =
+          parseInt(state.carts[foundIndex].price) * state.carts[foundIndex].amount * 100;
       }
 
-      state.carts = carts;
-      state.totalCarts = setCartValues(carts).totalCarts;
-      state.totalPrice = setCartValues(carts).totalPrice;
-      Storage.saveCart(carts);
+      state.totalCarts = setCartValues(state.carts).totalCarts;
+      state.totalPrice = setCartValues(state.carts).totalPrice;
+      Storage.saveCart(state.carts);
+    },
+    removeCartItem(state, action: PayloadAction<any>) {
+      state.carts = state.carts.filter((item) => item.id !== action.payload);
+
+      state.totalCarts = setCartValues(state.carts).totalCarts;
+      state.totalPrice = setCartValues(state.carts).totalPrice;
+      Storage.saveCart(state.carts);
     },
   },
 });
@@ -77,6 +90,5 @@ export const selectProductFilter = (state: RootState) => state.product.filter;
 export const selectProductCarts = (state: RootState) => state.product.carts;
 export const selectProductTotalCarts = (state: RootState) => state.product.totalCarts;
 export const selectProductTotalPrice = (state: RootState) => state.product.totalPrice;
-// export const selectStudentPagination = (state: RootState) => state.product.pagination;
 
 export default productReducer.reducer;

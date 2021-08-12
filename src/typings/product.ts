@@ -2,7 +2,7 @@ export interface Image {
   url: string;
 }
 export interface IProduct {
-  id?: number;
+  id: number;
   name: string;
   image: Image[];
   desc: string;

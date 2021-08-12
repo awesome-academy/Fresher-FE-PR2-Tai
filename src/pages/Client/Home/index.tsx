@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import Header from './../../../layout/Client/header';
-import Footer from './../../../layout/Client/footer';
+import MainLayout from './../../../layout/Client/MainLayout';
 import Banner from './../../../layout/Client/banner';
 import NewProductList from '../../../components/NewProductList';
 import BestSeller from '../../../components/BestSeller';
@@ -19,11 +18,11 @@ const Home = () => {
 
   return (
     <div className='home'>
-      <Header />
-      <Banner />
-      <NewProductList />
-      <BestSeller />
-      <Footer />
+      <MainLayout>
+        <Banner />
+        <NewProductList />
+        <BestSeller />
+      </MainLayout>
     </div>
   );
 };

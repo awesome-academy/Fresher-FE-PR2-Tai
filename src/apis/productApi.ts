@@ -7,7 +7,6 @@ class ProductApi {
     this.url = url;
   }
   get = (params: ParamsGetRequest): Promise<Response<IProduct>> => {
-    console.log({ params });
     return axiosClient.get(this.url, { params });
   };
 
