@@ -16,3 +16,4 @@ export const setCartValues = (carts: ICartItem[]) => {
 };
 export * from './Storage';
 export * from './history';
+export * from './validate';

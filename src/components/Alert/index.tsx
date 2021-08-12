@@ -1,13 +1,13 @@
 import { notification } from 'antd';
 type AlertProps = {
-  type: 'success' | 'warning';
-  message: string;
+  type: 'success' | 'error' | 'warning';
+  message?: string;
 };
 const Alert = ({ type, message }: AlertProps) => {
   notification[type]({
     message: 'Success',
-    description: 'Product added to cart',
-    duration: 0.75,
+    description: message,
+    duration: 1,
   });
 };
 export default Alert;

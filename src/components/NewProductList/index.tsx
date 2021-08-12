@@ -25,7 +25,7 @@ const NewProductList = () => {
         <div className='container'>
           <Slider {...settings}>
             {productList.map((product) => (
-              <div>
+              <div key={product.id}>
                 <Product product={product} />
               </div>
             ))}
