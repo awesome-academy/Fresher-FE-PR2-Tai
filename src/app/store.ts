@@ -1,15 +1,22 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import productReducer from '../features/product/productSlice';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
-
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { history } from '../utils';
 const sagaMiddleware = createSagaMiddleware();
-export const store = configureStore({
-  reducer: {
-    product: productReducer,
-  },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+
+const rootReducer = combineReducers({
+  router: connectRouter(history),
+  product: productReducer,
 });
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sagaMiddleware, routerMiddleware(history)),
+});
+
 sagaMiddleware.run(rootSaga);
 
 export type AppDispatch = typeof store.dispatch;

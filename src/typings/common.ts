@@ -10,5 +10,5 @@ export interface Response<T> {
 }
 export interface ICartItem extends IProduct {
   amount: number;
-  total?: number;
+  total: number;
 }

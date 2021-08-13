@@ -5,15 +5,16 @@ import product2 from './../../assets/images/product/default/home-1/default-2.jpg
 import { IProduct } from '../../typings';
 import { useDispatch } from 'react-redux';
 import { productActions } from '../../features/product/productSlice';
-
+import Alert from './../Alert';
 type ProductProps = {
   product: IProduct;
 };
 const Product = ({ product }: ProductProps) => {
   const dispatch = useDispatch();
 
-  const handleAddCart = (product: IProduct, quality: number) => {
-    dispatch(productActions.addToCart({ product, quality }));
+  const handleAddCart = (product: IProduct, amount: number) => {
+    dispatch(productActions.addToCart({ product, amount }));
+    Alert({ type: 'success', message: 'Product added to cart' });
   };
   return (
     <div className='product-default-single-item product-color--golden'>

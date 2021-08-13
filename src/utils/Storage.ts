@@ -1,6 +1,5 @@
-import { ICartItem } from '../typings';
 export const Storage = {
-  saveCart: (carts: ICartItem) => {
+  saveCart: (carts: any) => {
     localStorage.setItem('carts', JSON.stringify(carts));
   },
   getCart: () => {
@@ -9,5 +8,15 @@ export const Storage = {
   },
   removeCart: () => {
     localStorage.removeItem('carts');
+  },
+
+  setToken: (token: string) => {
+    localStorage.setItem('access_token', token);
+  },
+  getToken: () => {
+    return localStorage.getItem('access_token');
+  },
+  removeToken: () => {
+    localStorage.removeItem('access_token');
   },
 };

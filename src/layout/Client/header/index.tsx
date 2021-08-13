@@ -1,5 +1,6 @@
 import { HeartOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Dropdown } from 'antd';
+import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../app/hooks';
 import { selectProductTotalCarts } from '../../../features/product/productSlice';
 import logo from './../../../assets/images/logo/logo_black.png';
@@ -60,10 +61,10 @@ const Header = () => {
                     </a>
                   </li>
                   <li>
-                    <a href='#offcanvas-add-cart' className='offcanvas-toggle'>
+                    <Link to='/cart' className='offcanvas-toggle'>
                       <ShoppingCartOutlined />
                       <span className='item-count'>{totalCarts}</span>
-                    </a>
+                    </Link>
                   </li>
                   <li>
                     <a href='#search'>
