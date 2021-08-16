@@ -19,4 +19,15 @@ export const Storage = {
   removeToken: () => {
     localStorage.removeItem('access_token');
   },
+
+  setUser: (user: any) => {
+    localStorage.setItem('user', JSON.stringify(user));
+  },
+  getUser: () => {
+    const user = localStorage.getItem('user');
+    return typeof user === 'string' ? JSON.parse(user) : null;
+  },
+  removeUser: () => {
+    localStorage.removeItem('user');
+  },
 };

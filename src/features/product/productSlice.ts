@@ -37,7 +37,7 @@ const productReducer = createSlice({
     fetchProductListSuccess: (state, action: PayloadAction<Response<IProduct>>) => {
       state.load = false;
       state.data = action.payload.data;
-      state.total = action.payload.total;
+      state.total = action.payload.total || 0;
     },
     fetchProductListFailed: (state, action: PayloadAction<ParamsGetRequest>) => {
       state.load = false;
@@ -77,6 +77,13 @@ const productReducer = createSlice({
       state.totalCarts = setCartValues(state.carts).totalCarts;
       state.totalPrice = setCartValues(state.carts).totalPrice;
       Storage.saveCart(state.carts);
+    },
+    clearCart(state) {
+      Storage.removeCart();
+      setCartValues([]);
+      state.totalCarts = 0;
+      state.totalPrice = 0;
+      state.carts = [];
     },
   },
 });

@@ -5,6 +5,7 @@ import EmptyCart from './../../../components/EmptyCart';
 import { selectProductCarts } from '../../../features/product/productSlice';
 import { useAppSelector } from '../../../app/hooks';
 import { setCartValues } from '../../../utils';
+import { Link } from 'react-router-dom';
 const Cart = () => {
   const carts = useAppSelector(selectProductCarts);
   return (
@@ -73,9 +74,9 @@ const Cart = () => {
                           </p>
                         </div>
                         <div className='checkout_btn'>
-                          <a href='#' className='btn btn-md btn-golden'>
+                          <Link to='/checkout' className='btn btn-md btn-golden'>
                             Proceed to Checkout
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
